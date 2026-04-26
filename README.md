@@ -2,10 +2,11 @@
 
 
 
-/Hardware Spec/
+/Spec/
+
 os = cachy os(arch based) 
 
-computer spec = ryzen7 260 / rtx5060laptop / LDDR5 36GB
+ryzen7 260 / rtx5060laptop / LDDR5 36GB
 
 terminal = konsole
 
