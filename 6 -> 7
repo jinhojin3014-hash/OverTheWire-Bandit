@@ -1,0 +1,469 @@
+<문제>
+The password for the next level is stored somewhere on the server and has all of the following properties:
+
+
+<조건>
+    owned by user bandit7
+    owned by group bandit6
+    33 bytes in size
+
+<사용한코드및 결과>
+❯ ssh bandit6@bandit.labs.overthewire.org -p 2220
+                         _                     _ _ _   
+                        | |__   __ _ _ __   __| (_) |_ 
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_ 
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+                                                       
+
+                      This is an OverTheWire game server. 
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit6@bandit.labs.overthewire.org's password: 
+
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit6@bandit:~$ 
+bandit6@bandit:~$ ls
+bandit6@bandit:~$ find
+.
+./.bash_logout
+./.bashrc
+./.profile
+bandit6@bandit:~$ cd ./.
+bandit6@bandit:~$ cd ./.bash_logout
+-bash: cd: ./.bash_logout: Not a directory
+bandit6@bandit:~$ cd ./bash_logout
+-bash: cd: ./bash_logout: No such file or directory
+bandit6@bandit:~$ cat ./bash_logout
+cat: ./bash_logout: No such file or directory
+bandit6@bandit:~$ cat ./.bash_logout
+# ~/.bash_logout: executed by bash(1) when login shell exits.
+
+# when leaving the console clear the screen to increase privacy
+
+if [ "$SHLVL" = 1 ]; then
+    [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+fi
+bandit6@bandit:~$ find -size 33c
+bandit6@bandit:~$ grep bandit7
+^C
+bandit6@bandit:~$ ls
+bandit6@bandit:~$ cd
+bandit6@bandit:~$ find
+.
+./.bash_logout
+./.bashrc
+./.profile
+bandit6@bandit:~$ cat ./profile
+cat: ./profile: No such file or directory
+bandit6@bandit:~$ cat ./.profile
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+bandit6@bandit:~$ cd /etc
+bandit6@bandit:/etc$ ls
+acpi                    cron.yearly           groff                     issue.drifter.localhost     ldap            mime.types              passwd-       sensors3.conf      ubuntu-advantage
+adduser.conf            cryptsetup-initramfs  group                     issue.formulaone            ld.so.cache     mke2fs.conf             perl          sensors.d          ucf.conf
+alternatives            crypttab              group-                    issue.formulaone.fail       ld.so.conf      ModemManager            pki           services           udev
+apache2                 dbus-1                grub.d                    issue.formulaone.localhost  ld.so.conf.d    modprobe.d              plymouth      sgml               udisks2
+apparmor                debconf.conf          gshadow                   issue.krypton               legal           modules                 pm            shadow             ufw
+apparmor.d              debian_version        gshadow-                  issue.krypton.fail          leviathan_pass  modules-load.d          polkit-1      shadow-            update-manager
+apport                  debuginfod            gss                       issue.krypton.localhost     libaudit.conf   motd                    pollinate     shells             update-motd.d
+apt                     default               hdparm.conf               issue.leviathan             libblockdev     mtab                    ppp           skel               update-notifier
+bandit_pass             deluser.conf          hibagent-config.cfg       issue.leviathan.fail        libibverbs.d    multipath               profile       sos                usb_modeswitch.conf
+bash.bashrc             depmod.d              hibinit-config.cfg        issue.leviathan.localhost   libnl-3         multipath.conf          profile.d     ssh                usb_modeswitch.d
+bash_completion         dhcp                  host.conf                 issue.manpage               lighttpd        nanorc                  protocols     ssl                utumno_pass
+bash_completion.d       dhcpcd.conf           hostname                  issue.manpage.fail          locale.alias    narnia_pass             python3       stunnel            vconsole.conf
+behemoth_pass           dpkg                  hosts                     issue.manpage.localhost     locale.conf     needrestart             python3.12    subgid             vim
+bindresvport.blacklist  drifter_pass          hosts.allow               issue.maze                  locale.gen      netconfig               rc0.d         subgid-            vmware-tools
+binfmt.d                e2scrub.conf          hosts.deny                issue.maze.fail             localtime       netplan                 rc1.d         subuid             vortex_pass
+byobu                   ec2_version           init.d                    issue.maze.localhost        logcheck        network                 rc2.d         subuid-            vtrgb
+ca-certificates         emacs                 initramfs-tools           issue.narnia                login.defs      networkd-dispatcher     rc3.d         sudo.conf          watchdog.conf
+ca-certificates.conf    environment           inputrc                   issue.narnia.fail           logrotate.conf  networks                rc4.d         sudoers            wgetrc
+chrony                  ethertypes            iproute2                  issue.narnia.localhost      logrotate.d     newt                    rc5.d         sudoers.d          X11
+cloud                   fonts                 iscsi                     issue.net                   lsb-release     nftables.conf           rc6.d         sudo_logsrvd.conf  xattr.conf
+console-setup           formulaone_pass       issue                     issue.utumno                ltrace.conf     nsswitch.conf           rcS.d         supercat           xdg
+credstore               fstab                 issue.bandit              issue.utumno.fail           lvm             opt                     resolv.conf   supervisor         xinetd.conf
+credstore.encrypted     fuse.conf             issue.bandit.fail         issue.utumno.localhost      machine-id      os-release              rmt           sysctl.conf        xinetd.d
+cron.d                  fwupd                 issue.bandit.localhost    issue.vortex                magic           overlayroot.conf        rpc           sysctl.d           xml
+cron.daily              gai.conf              issue.behemoth            issue.vortex.fail           magic.mime      overlayroot.local.conf  rsyslog.conf  sysstat            zsh_command_not_found
+cron.hourly             gdb                   issue.behemoth.fail       issue.vortex.localhost      manpage_pass    PackageKit              rsyslog.d     systemd
+cron.monthly            gitconfig             issue.behemoth.localhost  kernel                      manpath.config  pam.conf                screenrc      terminfo
+crontab                 gnutls                issue.drifter             krypton_pass                maze_pass       pam.d                   security      timezone
+cron.weekly             gprofng.rc            issue.drifter.fail        landscape                   mdadm           passwd                  selinux       tmpfiles.d
+bandit6@bandit:/etc$ find -size 33c
+find: ‘./credstore.encrypted’: Permission denied
+./bandit_pass/bandit8
+./bandit_pass/bandit24
+./bandit_pass/bandit23
+./bandit_pass/bandit15
+./bandit_pass/bandit26
+./bandit_pass/bandit18
+./bandit_pass/bandit19
+./bandit_pass/bandit3
+./bandit_pass/bandit11
+./bandit_pass/bandit21
+./bandit_pass/bandit2
+./bandit_pass/bandit12
+./bandit_pass/bandit9
+./bandit_pass/bandit33
+./bandit_pass/bandit25
+./bandit_pass/bandit10
+./bandit_pass/bandit13
+./bandit_pass/bandit30
+./bandit_pass/bandit1
+./bandit_pass/bandit32
+./bandit_pass/bandit22
+./bandit_pass/bandit16
+./bandit_pass/bandit4
+./bandit_pass/bandit31
+./bandit_pass/bandit14
+./bandit_pass/bandit7
+./bandit_pass/bandit17
+./bandit_pass/bandit6
+./bandit_pass/bandit28
+./bandit_pass/bandit29
+./bandit_pass/bandit20
+./bandit_pass/bandit5
+./bandit_pass/bandit27
+find: ‘./sudoers.d’: Permission denied
+./fonts/conf.d/57-dejavu-sans.conf
+./machine-id
+./vortex_pass/vortex25
+./vortex_pass/vortex0
+find: ‘./stunnel’: Permission denied
+find: ‘./multipath’: Permission denied
+./ssl/certs/9846683b.0
+find: ‘./ssl/private’: Permission denied
+find: ‘./polkit-1/rules.d’: Permission denied
+find: ‘./credstore’: Permission denied
+./formulaone_pass/formulaone1
+./formulaone_pass/formulaone5
+./formulaone_pass/formulaone3
+./formulaone_pass/formulaone0
+./formulaone_pass/formulaone6
+./formulaone_pass/formulaone2
+./profile.d/colon.sh
+./drifter_pass/drifter6
+./drifter_pass/drifter15
+./drifter_pass/drifter1
+./drifter_pass/drifter4
+./drifter_pass/drifter14
+./drifter_pass/drifter2
+./drifter_pass/drifter0
+./drifter_pass/drifter13
+./drifter_pass/drifter9
+./drifter_pass/drifter8
+./drifter_pass/drifter12
+./drifter_pass/drifter5
+./drifter_pass/drifter7
+./drifter_pass/drifter3
+./drifter_pass/drifter10
+find: ‘./xinetd.d’: Permission denied
+bandit6@bandit:/etc$ cat ./bandit_pass/bandit7
+cat: ./bandit_pass/bandit7: Permission denied
+bandit6@bandit:/etc$ sudo cat ./bandit_pass/bandit7
+sudo: /usr/bin/sudo must be owned by uid 0 and have the setuid bit set
+bandit6@bandit:/etc$ cat ./drifter_pass/drifter7
+cat: ./drifter_pass/drifter7: Permission denied
+bandit6@bandit:/etc$ 2 >dev/null
+-bash: dev/null: No such file or directory
+bandit6@bandit:/etc$ 2 > dev/null
+-bash: dev/null: No such file or directory
+bandit6@bandit:/etc$ 2 >/dev/null
+2: command not found
+bandit6@bandit:/etc$ 2>/dev/null
+bandit6@bandit:/etc$ ls
+acpi                    cron.yearly           groff                     issue.drifter.localhost     ldap            mime.types              passwd-       sensors3.conf      ubuntu-advantage
+adduser.conf            cryptsetup-initramfs  group                     issue.formulaone            ld.so.cache     mke2fs.conf             perl          sensors.d          ucf.conf
+alternatives            crypttab              group-                    issue.formulaone.fail       ld.so.conf      ModemManager            pki           services           udev
+apache2                 dbus-1                grub.d                    issue.formulaone.localhost  ld.so.conf.d    modprobe.d              plymouth      sgml               udisks2
+apparmor                debconf.conf          gshadow                   issue.krypton               legal           modules                 pm            shadow             ufw
+apparmor.d              debian_version        gshadow-                  issue.krypton.fail          leviathan_pass  modules-load.d          polkit-1      shadow-            update-manager
+apport                  debuginfod            gss                       issue.krypton.localhost     libaudit.conf   motd                    pollinate     shells             update-motd.d
+apt                     default               hdparm.conf               issue.leviathan             libblockdev     mtab                    ppp           skel               update-notifier
+bandit_pass             deluser.conf          hibagent-config.cfg       issue.leviathan.fail        libibverbs.d    multipath               profile       sos                usb_modeswitch.conf
+bash.bashrc             depmod.d              hibinit-config.cfg        issue.leviathan.localhost   libnl-3         multipath.conf          profile.d     ssh                usb_modeswitch.d
+bash_completion         dhcp                  host.conf                 issue.manpage               lighttpd        nanorc                  protocols     ssl                utumno_pass
+bash_completion.d       dhcpcd.conf           hostname                  issue.manpage.fail          locale.alias    narnia_pass             python3       stunnel            vconsole.conf
+behemoth_pass           dpkg                  hosts                     issue.manpage.localhost     locale.conf     needrestart             python3.12    subgid             vim
+bindresvport.blacklist  drifter_pass          hosts.allow               issue.maze                  locale.gen      netconfig               rc0.d         subgid-            vmware-tools
+binfmt.d                e2scrub.conf          hosts.deny                issue.maze.fail             localtime       netplan                 rc1.d         subuid             vortex_pass
+byobu                   ec2_version           init.d                    issue.maze.localhost        logcheck        network                 rc2.d         subuid-            vtrgb
+ca-certificates         emacs                 initramfs-tools           issue.narnia                login.defs      networkd-dispatcher     rc3.d         sudo.conf          watchdog.conf
+ca-certificates.conf    environment           inputrc                   issue.narnia.fail           logrotate.conf  networks                rc4.d         sudoers            wgetrc
+chrony                  ethertypes            iproute2                  issue.narnia.localhost      logrotate.d     newt                    rc5.d         sudoers.d          X11
+cloud                   fonts                 iscsi                     issue.net                   lsb-release     nftables.conf           rc6.d         sudo_logsrvd.conf  xattr.conf
+console-setup           formulaone_pass       issue                     issue.utumno                ltrace.conf     nsswitch.conf           rcS.d         supercat           xdg
+credstore               fstab                 issue.bandit              issue.utumno.fail           lvm             opt                     resolv.conf   supervisor         xinetd.conf
+credstore.encrypted     fuse.conf             issue.bandit.fail         issue.utumno.localhost      machine-id      os-release              rmt           sysctl.conf        xinetd.d
+cron.d                  fwupd                 issue.bandit.localhost    issue.vortex                magic           overlayroot.conf        rpc           sysctl.d           xml
+cron.daily              gai.conf              issue.behemoth            issue.vortex.fail           magic.mime      overlayroot.local.conf  rsyslog.conf  sysstat            zsh_command_not_found
+cron.hourly             gdb                   issue.behemoth.fail       issue.vortex.localhost      manpage_pass    PackageKit              rsyslog.d     systemd
+cron.monthly            gitconfig             issue.behemoth.localhost  kernel                      manpath.config  pam.conf                screenrc      terminfo
+crontab                 gnutls                issue.drifter             krypton_pass                maze_pass       pam.d                   security      timezone
+cron.weekly             gprofng.rc            issue.drifter.fail        landscape                   mdadm           passwd                  selinux       tmpfiles.d
+bandit6@bandit:/etc$ find -size 33c
+find: ‘./credstore.encrypted’: Permission denied
+./bandit_pass/bandit8
+./bandit_pass/bandit24
+./bandit_pass/bandit23
+./bandit_pass/bandit15
+./bandit_pass/bandit26
+./bandit_pass/bandit18
+./bandit_pass/bandit19
+./bandit_pass/bandit3
+./bandit_pass/bandit11
+./bandit_pass/bandit21
+./bandit_pass/bandit2
+./bandit_pass/bandit12
+./bandit_pass/bandit9
+./bandit_pass/bandit33
+./bandit_pass/bandit25
+./bandit_pass/bandit10
+./bandit_pass/bandit13
+./bandit_pass/bandit30
+./bandit_pass/bandit1
+./bandit_pass/bandit32
+./bandit_pass/bandit22
+./bandit_pass/bandit16
+./bandit_pass/bandit4
+./bandit_pass/bandit31
+./bandit_pass/bandit14
+./bandit_pass/bandit7
+./bandit_pass/bandit17
+./bandit_pass/bandit6
+./bandit_pass/bandit28
+./bandit_pass/bandit29
+./bandit_pass/bandit20
+./bandit_pass/bandit5
+./bandit_pass/bandit27
+find: ‘./sudoers.d’: Permission denied
+./fonts/conf.d/57-dejavu-sans.conf
+./machine-id
+./vortex_pass/vortex25
+./vortex_pass/vortex0
+find: ‘./stunnel’: Permission denied
+find: ‘./multipath’: Permission denied
+./ssl/certs/9846683b.0
+find: ‘./ssl/private’: Permission denied
+find: ‘./polkit-1/rules.d’: Permission denied
+find: ‘./credstore’: Permission denied
+./formulaone_pass/formulaone1
+./formulaone_pass/formulaone5
+./formulaone_pass/formulaone3
+./formulaone_pass/formulaone0
+./formulaone_pass/formulaone6
+./formulaone_pass/formulaone2
+./profile.d/colon.sh
+./drifter_pass/drifter6
+./drifter_pass/drifter15
+./drifter_pass/drifter1
+./drifter_pass/drifter4
+./drifter_pass/drifter14
+./drifter_pass/drifter2
+./drifter_pass/drifter0
+./drifter_pass/drifter13
+./drifter_pass/drifter9
+./drifter_pass/drifter8
+./drifter_pass/drifter12
+./drifter_pass/drifter5
+./drifter_pass/drifter7
+./drifter_pass/drifter3
+./drifter_pass/drifter10
+find: ‘./xinetd.d’: Permission denied
+bandit6@bandit:/etc$ find --help
+Usage: find [-H] [-L] [-P] [-Olevel] [-D debugopts] [path...] [expression]
+
+Default path is the current directory; default expression is -print.
+Expression may consist of: operators, options, tests, and actions.
+
+Operators (decreasing precedence; -and is implicit where no others are given):
+      ( EXPR )   ! EXPR   -not EXPR   EXPR1 -a EXPR2   EXPR1 -and EXPR2
+      EXPR1 -o EXPR2   EXPR1 -or EXPR2   EXPR1 , EXPR2
+
+Positional options (always true):
+      -daystart -follow -nowarn -regextype -warn
+
+Normal options (always true, specified before other expressions):
+      -depth -files0-from FILE -maxdepth LEVELS -mindepth LEVELS
+       -mount -noleaf -xdev -ignore_readdir_race -noignore_readdir_race
+
+Tests (N can be +N or -N or N):
+      -amin N -anewer FILE -atime N -cmin N -cnewer FILE -context CONTEXT
+      -ctime N -empty -false -fstype TYPE -gid N -group NAME -ilname PATTERN
+      -iname PATTERN -inum N -iwholename PATTERN -iregex PATTERN
+      -links N -lname PATTERN -mmin N -mtime N -name PATTERN -newer FILE
+      -nouser -nogroup -path PATTERN -perm [-/]MODE -regex PATTERN
+      -readable -writable -executable
+      -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N
+      -used N -user NAME -xtype [bcdpfls]
+
+Actions:
+      -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print 
+      -fprint0 FILE -fprint FILE -ls -fls FILE -prune -quit
+      -exec COMMAND ; -exec COMMAND {} + -ok COMMAND ;
+      -execdir COMMAND ; -execdir COMMAND {} + -okdir COMMAND ;
+
+Other common options:
+      --help                   display this help and exit
+      --version                output version information and exit
+
+Valid arguments for -D:
+exec, opt, rates, search, stat, time, tree, all, help
+Use '-D help' for a description of the options, or see find(1)
+
+Please see also the documentation at https://www.gnu.org/software/findutils/.
+You can report (and track progress on fixing) bugs in the "find"
+program via the GNU findutils bug-reporting page at
+https://savannah.gnu.org/bugs/?group=findutils or, if
+you have no web access, by sending email to <bug-findutils@gnu.org>.
+bandit6@bandit:/etc$ find -user bandit7
+find: ‘./credstore.encrypted’: Permission denied
+./bandit_pass/bandit7
+find: ‘./sudoers.d’: Permission denied
+find: ‘./stunnel’: Permission denied
+find: ‘./multipath’: Permission denied
+find: ‘./ssl/private’: Permission denied
+find: ‘./polkit-1/rules.d’: Permission denied
+find: ‘./credstore’: Permission denied
+find: ‘./xinetd.d’: Permission denied
+bandit6@bandit:/etc$ cat ./bandit_pass/bandit7
+cat: ./bandit_pass/bandit7: Permission denied
+bandit6@bandit:/etc$ find -group bandit6
+find: ‘./credstore.encrypted’: Permission denied
+./bandit_pass/bandit6
+find: ‘./sudoers.d’: Permission denied
+find: ‘./stunnel’: Permission denied
+find: ‘./multipath’: Permission denied
+find: ‘./ssl/private’: Permission denied
+find: ‘./polkit-1/rules.d’: Permission denied
+find: ‘./credstore’: Permission denied
+find: ‘./xinetd.d’: Permission denied
+bandit6@bandit:/etc$ cat ./bandit_pass/bandit6
+HWasnPhtq9AVKe0dmk45nxy20cvUa6EG 
+
+
+
+<why?>
+늘 그렇듯이 ls 로 찾았는데 아무것도 안나옴 그래서? find 써서 뜨는 파일 들어갔음 그랬더니 /etc/~~ 이런식으로 나오길래 etc에 파일이 있으려나? 하고 cd 로 들어감 근데 디렉토리/파일이 너무
+많은 혼잡한 환경이 보이길래 그제서야 find 명령어로 33바이트짜리를 찾음 허나 그크기의 파일은 많았음. 결국 사용자,그룹이름 을 사용하여 검색하기로 마음먹음
+근데 명령어를 잘몰라서 --help 명령어로 어떤식으로 써야하는지 확인, name으로 시도했지만 찾지못함 그러하여 group으로 bandit6 를 검색, 그결과 나머지 파일은 권한 부족으로 찾지못했지만 오직 1개의 파일을 찾음
+그러하여 cat으로 ./bandit_pass/bandit6 파일을 연결과 열쇠를 획득
+
+<사용한 코드>
+cd = 디렉토리이동
+ls = 현재 디렉토리에서 파일이나 디렉토리찾기
+cat =파일열기
+find =조건에맞는 파일찾기
+-size =조건부분에서 크기를 지정
+-group =조건부분에서 그룹이름을 지정
+-name =조건부분에서 이름을 지정
+--help =명령어 사용법을 알려주는 코드
+
