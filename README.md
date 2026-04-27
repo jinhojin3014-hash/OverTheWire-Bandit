@@ -8,6 +8,6 @@ os = cachy os(arch based)
 
 ryzen7 260 / rtx5060laptop / LDDR5 36GB
 
-terminal = konsole
+terminal = fish - konsole
 
 
