@@ -109,7 +109,7 @@ millionth       dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 그럼 cat data.txt만 치는게아니라 |(파이프)를 같이사용해서 cat data.txt | grep millionth 로 millionth가 들어간 줄을 찾으면 돼겠다고 생각했어요
 
 
-<명령어>
+<사용한 명령어>
 ssh = 주소로연결 
 cat = 파일을 열기
 ls = 현재 디렉토리내에서 파일/디렉토리 찾기
