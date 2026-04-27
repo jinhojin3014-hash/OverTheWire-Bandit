@@ -2,7 +2,7 @@
 The password for the next level is stored in a file called - located in the home directory
 
 
-<사용한코드 및 결과>
+<사용한명령어 결과>
 bandit0@bandit:~$ \ssh bandit1@bandit.labs.overthewire.org -p 2220
 The authenticity of host '[bandit.labs.overthewire.org]:2220 ([127.0.0.1]:2220)' can't be established.
 ED25519 key fingerprint is SHA256:C2ihUBV7ihnV1wUXRb4RrEcLfXC5CXlhmAAM/urerLY.
