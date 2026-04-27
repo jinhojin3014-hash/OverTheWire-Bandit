@@ -1,7 +1,7 @@
 <문제>
 The password for the next level is stored in a file called --spaces in this filename-- located in the home directory
 
-<사용한코드 및 결과>
+<사용한명령어 결과>
 ❯ ssh bandit2@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _   
                         | |__   __ _ _ __   __| (_) |_ 
@@ -169,7 +169,7 @@ cat ./"제목" 을 사용하여 열람성공
 (오타때문에 계속실패했었음)
 
 
-<사용한코드>
+<사용한명령어>
 ssh = 주소로 들어가기 
 cd = 디렉토리 이동
 ls = 현재디렉토리에서 파일/디렉토리찾기
