@@ -1,4 +1,4 @@
-<문제>
+ㆍ<문제>
 The password for the next level is stored in a hidden file in the inhere directory.
 
 <사용한명령어 결과>
@@ -119,7 +119,7 @@ bandit3@bandit:~/inhere$ cat ...Hiding-From-You
 
 <why?>
 ls로 디렉토리 확인후 cd로입장 하지만 해당디렉토리에서 ls입력시 아무 파일이뜨지않음(마침표때문에 보이지않는것)
-그러하여 find 명령어로 파일을 찾음 그후 파일이름이 . ./...Hinding-From-You인것을 확인(실제이름은 ...Hinding-From-You임 앞쪽 ./은 디렉토리를 의미)
+그러하여 find 명령어로 파일을 찾음 그후 파일이름이 . ./...Hiding-From-You인것을 확인(실제이름은 ...Hiding-From-You임 앞쪽 ./은 디렉토리를 의미)
 그후 cat명령어를 사용하여 비밀번호를 획득함
 
 
