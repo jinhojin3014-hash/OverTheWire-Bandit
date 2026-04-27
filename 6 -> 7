@@ -7,7 +7,7 @@ The password for the next level is stored somewhere on the server and has all of
     owned by group bandit6
     33 bytes in size
 
-<사용한코드및 결과>
+<사용한명령어 결과>
 ❯ ssh bandit6@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _   
                         | |__   __ _ _ __   __| (_) |_ 
@@ -457,7 +457,7 @@ HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
 근데 명령어를 잘몰라서 --help 명령어로 어떤식으로 써야하는지 확인, name으로 시도했지만 찾지못함 그러하여 group으로 bandit6 를 검색, 그결과 나머지 파일은 권한 부족으로 찾지못했지만 오직 1개의 파일을 찾음
 그러하여 cat으로 ./bandit_pass/bandit6 파일을 연결과 열쇠를 획득
 
-<사용한 코드>
+<사용한 명령어>
 cd = 디렉토리이동
 ls = 현재 디렉토리에서 파일이나 디렉토리찾기
 cat =파일열기
@@ -466,4 +466,7 @@ find =조건에맞는 파일찾기
 -group =조건부분에서 그룹이름을 지정
 -name =조건부분에서 이름을 지정
 --help =명령어 사용법을 알려주는 코드
+
+(명령어 사용이유)
+
 
