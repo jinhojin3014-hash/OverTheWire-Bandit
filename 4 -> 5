@@ -1,7 +1,7 @@
 <문재>
 The password for the next level is stored in the only human-readable file in the inhere directory. Tip: if your terminal is messed up, try the “reset” command.
 
-<사용한 코드및 결과>
+<사용한명령어 결과>
 ❯ ssh bandit4@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _   
                         | |__   __ _ _ __   __| (_) |_ 
@@ -138,7 +138,7 @@ cd 로 디렉토리 진입후 ls 사용해보니 파일이 여러개뜸 그중 1
 구분결과 파일07이 텍스트인것을발견
 그후 cat ./-file07을 사용하여 파일을 연후 열쇠획득
 
-<사용한코드>
+<사용한 명령어>
 ssh = 주소 접속
 cd =디렉토리 이동 
 ls =현재 디렉토리내에서 파일/디렉토리찾기
