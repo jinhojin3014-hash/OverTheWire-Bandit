@@ -8,7 +8,7 @@ The password for the next level is stored in a file somewhere under the inhere d
     not executable
 
 
-<사용한코드및 결과>
+<사용한명령어 결과>
 ❯ ssh bandit5@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _   
                         | |__   __ _ _ __   __| (_) |_ 
