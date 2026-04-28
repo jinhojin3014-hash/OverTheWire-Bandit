@@ -105,8 +105,8 @@ millionth       dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 
 
 <why?>
-이게 알고보면 돼게 쉬워요 data.txt파일 내에는 무수히 많은 글자가 있는데 문제 조건에서 millionth가 들어간 줄의 글자가 비번이라 명시했어요
-그럼 cat data.txt만 치는게아니라 |(파이프)를 같이사용해서 cat data.txt | grep millionth 로 millionth가 들어간 줄을 찾으면 돼겠다고 생각했어요
+이게 알고보면 돼게 쉬움 data.txt파일 내에는 무수히 많은 글자가 있는데 문제 조건에서 millionth가 들어간 줄의 글자가 비번이라 명시했음
+그럼 cat data.txt만 치는게아니라 |(파이프)를 같이사용해서 cat data.txt | grep millionth 로 millionth가 들어간 줄을 찾으면 돼겠다고 생각했음
 
 
 <사용한 명령어>
