@@ -4,9 +4,9 @@
 
 /Spec/
 
-os = cachy os(arch based) 
+os = windows11
 
-ryzen7 260 / rtx5060laptop / LDDR5 36GB
+ryzen7 260 / rtx5060laptop / LDDR5x 36GB
 
 terminal = fish - konsole
 
