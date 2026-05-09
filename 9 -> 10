@@ -1,0 +1,335 @@
+<문제>
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+<사용한명령어및결과>
+root@DESKTOP-MS82E0U:~# ssh bandit9@bandit.labs.overthewire.org -p 2220
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit9@bandit.labs.overthewire.org's password:
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit9@bandit:~$ ls
+data.txt
+bandit9@bandit:~$ cat data.txt | grep =
+grep: (standard input): binary file matches
+bandit9@bandit:~$ grep --help
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Search for PATTERNS in each FILE.
+Example: grep -i 'hello world' menu.h main.c
+PATTERNS can contain multiple patterns separated by newlines.
+
+Pattern selection and interpretation:
+  -E, --extended-regexp     PATTERNS are extended regular expressions
+  -F, --fixed-strings       PATTERNS are strings
+  -G, --basic-regexp        PATTERNS are basic regular expressions
+  -P, --perl-regexp         PATTERNS are Perl regular expressions
+  -e, --regexp=PATTERNS     use PATTERNS for matching
+  -f, --file=FILE           take PATTERNS from FILE
+  -i, --ignore-case         ignore case distinctions in patterns and data
+      --no-ignore-case      do not ignore case distinctions (default)
+  -w, --word-regexp         match only whole words
+  -x, --line-regexp         match only whole lines
+  -z, --null-data           a data line ends in 0 byte, not newline
+
+Miscellaneous:
+  -s, --no-messages         suppress error messages
+  -v, --invert-match        select non-matching lines
+  -V, --version             display version information and exit
+      --help                display this help text and exit
+
+Output control:
+  -m, --max-count=NUM       stop after NUM selected lines
+  -b, --byte-offset         print the byte offset with output lines
+  -n, --line-number         print line number with output lines
+      --line-buffered       flush output on every line
+  -H, --with-filename       print file name with output lines
+  -h, --no-filename         suppress the file name prefix on output
+      --label=LABEL         use LABEL as the standard input file name prefix
+  -o, --only-matching       show only nonempty parts of lines that match
+  -q, --quiet, --silent     suppress all normal output
+      --binary-files=TYPE   assume that binary files are TYPE;
+                            TYPE is 'binary', 'text', or 'without-match'
+  -a, --text                equivalent to --binary-files=text
+  -I                        equivalent to --binary-files=without-match
+  -d, --directories=ACTION  how to handle directories;
+                            ACTION is 'read', 'recurse', or 'skip'
+  -D, --devices=ACTION      how to handle devices, FIFOs and sockets;
+                            ACTION is 'read' or 'skip'
+  -r, --recursive           like --directories=recurse
+  -R, --dereference-recursive  likewise, but follow all symlinks
+      --include=GLOB        search only files that match GLOB (a file pattern)
+      --exclude=GLOB        skip files that match GLOB
+      --exclude-from=FILE   skip files that match any file pattern from FILE
+      --exclude-dir=GLOB    skip directories that match GLOB
+  -L, --files-without-match  print only names of FILEs with no selected lines
+  -l, --files-with-matches  print only names of FILEs with selected lines
+  -c, --count               print only a count of selected lines per FILE
+  -T, --initial-tab         make tabs line up (if needed)
+  -Z, --null                print 0 byte after FILE name
+
+Context control:
+  -B, --before-context=NUM  print NUM lines of leading context
+  -A, --after-context=NUM   print NUM lines of trailing context
+  -C, --context=NUM         print NUM lines of output context
+  -NUM                      same as --context=NUM
+      --group-separator=SEP  print SEP on line between matches with context
+      --no-group-separator  do not print separator for matches with context
+      --color[=WHEN],
+      --colour[=WHEN]       use markers to highlight the matching strings;
+                            WHEN is 'always', 'never', or 'auto'
+  -U, --binary              do not strip CR characters at EOL (MSDOS/Windows)
+
+When FILE is '-', read standard input.  With no FILE, read '.' if
+recursive, '-' otherwise.  With fewer than two FILEs, assume -h.
+Exit status is 0 if any line is selected, 1 otherwise;
+if any error occurs and -q is not given, the exit status is 2.
+
+Report bugs to: bug-grep@gnu.org
+GNU grep home page: <https://www.gnu.org/software/grep/>
+General help using GNU software: <https://www.gnu.org/gethelp/>
+bandit9@bandit:~$ cat data.txt | grep --text =
+[�Ӕe�I%�3d��VgH/�V7�|��D��F=���K^s}!��4�,�      ��]
+                                                   ���*��������AZ����V  �}�GR���F�\�An�z�KR..�Le��q�� Zҝ
+                                                                                                        #J@s���K�'8�.`4W+��_��q�� ��;��#�j␦����b�6      '�X�␦�g[x���4��{Gp��P��o~�;39
+-���˻��>��R�����+�U%�I�+���,MB컊����P�ξ���.(�F
+�i�?�����s�̈́�
+            �32�j�Фlf��并�9am�a$C�9�_U������+� ========== the
+w��Z=�#��p�({U��
+                CMLX��� T�~!:���MR�Wq��d#�����7�ǋR#,����^��'�L�T�0=��5�|��=�\�/
+>�F^p⤏�R=�I���s�y5F�O~4�Rn�L�V
+���RS�G�wP��9LF�Y?�����n�n�8�m�-���ҥ������fT�p�p        uS�$��r[sH怭�q�� ��_̦ڒ"�XT�͎�ԍQ�I����|������'<k��5!�mIG�Y���G�ۙO7�n����E�P|�M��z
+                                                                                                                                     ��TFql��H�r�{L��h'�-��YppWQ����=�Ϲx�Ȯ���~]:8���;�δK1虌�X���V=5��70-�d���&�G'Q��6A�9�ĉTZ����(@崬�1��.NG�
+���K�U��7�� ���j>��I�؂�:Lp��������c�j֋[}���Tl
+yź�Y�����K�iF1�K�q)ЛbX��+x��P8��!����Y����vr�Y��]oގ4���Ⱦ��z
+                                         x�-�Jl�T�eI%Y��3�      �%����qtGp�r`)Ou�A䖷�O�7~\g�l՟rg
+                                                                                                �]s֨��ɽ`t!Y��+E��P/��m�� ����z��I\=Ow��
+                                                                                                                                      D�>�+"G�PmoCVO1�a^������'����N9�t�?��z,0
+�fǨ�%��<`�\��ݷ�e
+�`
+!BmΦ������ȩ7��Gi*���V�MV3c��3"Jbi�H����P��=ܪL�Ȣ���@���T4#LL.Ղ�G��"f*�
+� _7;fC���^�u��Y�9K�[�E����M,,K���?�h�͐s�m5�?J|��g��p��␦`��tX^���tʃY(�lފ����� �G=����    �o�8L��mΖ����r�V�|�b}W�GQ
+  �pZ␦��Y�Sc�
+y��z���f%���8O�H/��M�9(���g���R�$V�������]vu����cpÛ����ZAy~>���*%T�G0���r`K�$�*��Tb�u3,گ�A(N�dY␦He;|�~z� ���Y������h&�wה_4]������M��␦�@nC�ָ���P�Ѐ�̦�J�Ǿ�$E܈�V?L=�f�3�
+                                                                                                                                                                   �߆7e
+                                                                                                                                                                       �2B�B@/C�|�)����0��2q�,�a��ym1O7��ؙÙ��p'{V�M��ն�:�
+                      �˿I��e�F��J�L<�R�Sk�&-���V�Fs�{��P��[�M����~j␦a)������{� ���AqtcwGO.�`e8p�+�\G�X�
+�����t[�-|��    TÌl��~�[����Ʒ*i��(��
+                                    ���������G����˘�������VMSYK.�������̸�����e���;�+��n��WS�ė␦�UKė�3��br�����vH��
+�M��9pk��*␦�3��2!��ILu���͖��|)@������C�I��;�+��S*x�(/�Y�ɔ���+Ճ�-��ǲ]��B<�i�s�[��?'���A�*o��D��'���V��y��adɫ�h*ޡ�{��k�<q�ؽ        μk��ͬ눔=�r߫QfaaƎ�SZ�#�Ҭ��7KȜ��ܯٰm����-���ـl�J����
+                                                                                                                                                                              q����1*v�Vj������6�ȕ���'�j��t31s���
+tV4@Ǩ����*�����Y_D"f�ᜀ����%3=VZ���Q�����R�7f�=���.eث6S���8��t��p�4@Ip*�r?��@
+                                                                             Z��7����wm@�}��i�<ԑNnҾ@q�H␦x3:��nGm�V���#W�)�7`?�t\�-L?�����n
+,��Ŕ�'Mt}w
+�h)~b�"I�st:Q?r���jﭱ)�X~_%�PH궬�S����s~��S�.3�����k�l,���]�b0��Rz�׀m;␦n�rrЙI�7畒7�Z-.߯og����B
+                                                                                            ({��T8�@
+                                                                                                    �J�h)d�Hd#���j!��s���,z
+                                                                                                                           DM��W�B]�����Y������]���ϞKZ
+�       ?oOХ������[!:�(�"�Gt���D����:f�� �                                                                                                            �Ci�_�~%w�j�Y��$G��:J
+                                          ��a��������}��on<<�7�������
+                                                                     �%���C \�ojpa�F�"
+                                                                                      �a�wF��>���:�GDn�t��n�5.{�#��z��3��K��$FK�/�eU����B7#8�G6�<U��
+                                                                                                                                                    ��␦a+�����-�RD���֍�'aM�4%�l�T����H!0W�         ��[�]�C�aK7x�O����~&��~#f�hW+��^E�)��+����˄O���8��N�yj�8s�S��)��n2h$�^|e�C�$d����ũ��ks�␦�Q8&<xED�bJ�����^���_�jＫKFړMu\ڀ�i�{ɖ���Q�i5J�>��ND5
+                                                                                                                                                            �5+�        lNr4{����e6��I�    �;f$�$�u2E���ڽ��#�(������w�^�����6=��_xA�6���KX��&�0��΄��|�
+                                                                   hܟ��aN��$�ڳ��?�%5    wi؇k�к�|�O�z���c�M�^�'�2�6k�~�����ũZ���������%&M�H
+:�{��Q��G�g��$�K�n��C��;��V��'T
+                               H�t���s-�ߒS��ʒ��.��O_���Y��p�����IϾ�~���!y�fL-(0�A�]@�g"���&�*��L�z\5�X�l�nc�罄�u�#]���ӝg<��&���9�U�     �T�u�z���»��������W���+˕6ѕN��+�s8ѐ�q?yPd�����L���fC�7��$������PaR�(!␦��Lq�ՙ>0���l^��;(A` ���b5,����b��|u�հ���[2�§1��I�Ȯ�4����q��a�@��n�F��␦f6wę%C�-��}^��
+�h���aFE�^;���ʽ�,��/3"��mM-gL`|�x��^========== password
+��Lk��b>��X��Ds�n�����R� ��Cr�r��=@�����^��J��@/ҩ�:N�����8>����E��:��+�?d8�h���,�䲣��Xb�        �jl�{�¤�'��Qv*�7wqp�������P���z�q�}��Qɗw��KpPq���\����^
+                                                                                                                                                       �ܳ��>����&P�Rd����qp-5�ܾܿ�,������=����<��M��q5U�
+                 wq�U�6w�3X��H�Ù�Ɋ���1���w)��@]R>��+����@Ȫ�<��=��M�ʫ���X9� �gk̅�4h�ݎ����$t��X�!R��9f�!`/�=��v�}@SK␦��3�~w�F�w���Vy���[��
+MW�(��Yv��p~8^��ԡ#�7��␦UPp��_�\N+������^� 2�^�@G6�G��G��                                                                               �|Xq�o尬�MEe��Bu$�ѡ_1//?�ڴ�
+X��e�;�!�����܂�n�;��yo[����:<D�S�u�T�h��<n�I�:��F��S�5���=�N���f�G��D���jA      i�Tb�
+\���3��"���I����␦b
+                  �����I�18={M\��5�����F_�Pv4��lC�]C���~�N��\M�����/�MyGb�gpw'�����G�wmҿ���+﬩MR��␦Td�}}�0𬶘�W8��,$�|��h��Q�A�l�ф�OCy���1:>A�(S7'�3Ӡ ����}��*<�ʙ�R����<ŬPj���G0E��}t�ä��{�z�/?7��F␦���B�������1�j�����K�T�����ĺ1=Z����Sy�!�+f��Q
+                                                            �����X�?$����t��X��$��========== is
+�␦��|�9��E$Xk;���6s/e�y��9Z�C��H�5{gֳ*$����b��
+                                             �k��S�C�<�})we�ً��'"3LG�K��[��� ��<@4D�v��N���Tw"���3�{t]2�PE�좨6a�ϐ�S�_������$��y�ŵ�k���Q�8}�O����k�w�Di!ym_ԋ�������T��5�� � hp3ǌȡ6<���l�<��
+      lCm�U.�x�vJ,
+                  60U�L�=����.����I���sj�o�M�;�s�$�����P�`g�U~��k�zƳ��  ��(Q�DF����}q
+                                                                                     �E�-�9F�C��BT���W_.��wYs~��"��E����Q���2�����L�z�(h���_��YA"`>�
+                                                                                                                                                    "\l�E�Y3�M� ��ºͺI�'r~�e٪��e�/�_���fL���wr{�d�␦��x��B�!1�_a�o�v�jyr[-�#�����C�����FH�|)�        弾Y��ӱ2�H8m�Bs�::(�`i<j�*�ڭ�(bE&�T�Gd
+                                                                                                     K5��/      6�^����ാZ
+                                                                                                                         ��y.���A�U֝���lP��x4�հA]�0xi�/����=�R�:����(�H�-~h���B"l��7\�o۶E0CcŅ���W�7�����|u��w�9�:��>dd��"t���
+)�M�F8�Y69�I��KG/�lf�Y���U6���           �@�b'�:�#�a�CѫB����>����=Dvq�K2�"���ѥ0r
+                              m� ��}����o@��                                    ��A� �Fń
+�o �p��q}Z�9�>�!�G�Ņ�(��Mc�V�/{'����cP�E)��5��Nxɐ@$+��Rb�͸�k��K�&��bn:+�␦�KR�s          ���8��M���.]�����0�bJc%ȕ#�Bk�wI.R�?
+�e�a5A��,�r��ʈ�ğ                                ɾOD3��d$>��-J�브�!�&�N���s}�UBrӴ���Ԟ���#�i��␦��{��f)U���~���+�ˈr��.�Fc�i�tv�����6DlI,��� �U]�ӚSׂ��S
+"���&��Kʹ��)4�Ŭ`�CwV�                                                                                                                             &VZ/y�!r�IÅv��[�����H�o�+t�yI�h}�
+��B�>ZS�&ՃmX�        l�jI��p�Յ(��g�AXa�f�       u&�Ɲ�g�NwGk���#����2�����W��M)V�Tl��)F���TU��8#��#&��;�$K[��<[��q�#&����e_�|
+��RzP3���H݈�9�|D�£��\��sF�6�W�)?�sW�h ؼ�o�␦cQ�7�Bl����P�0��&�L����S!���2�)�,d7#�<���0                                        J�i�s^�ld�mm �g\�ݡ�u���$��1��Cf�M��\�#%� j�!��GQi
+��m��$=lbG�HncӬq��l�`������E~���c��^
+Nn��&�F�I��6T�c�␦d-�����xx5����^�v��b�(2��24��S�}�W���0ی�0�P�Ӱh�U��e�ʡ�qo␦(��b}c�ۈz߫e����o���l@�G5�5��B�%�}�[�#/�=A�d��^���ܫ�0���E�(S��� ~��>��B~��
+2                                         �������k��}�������F�========== FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+��NRK�&�E'�͏5�$�bmlŁ"י��}a4�&���T�-�6��`h,^Ē&�P��R0���݄Y;��\�漌��I�u5�S«i��w���9���(,n*d�qW��2�r��z�1�)�l���>mH��Ȳ���Yy�eb���g�nu���#���/���X$
+                                                                                                                               C�l��J
+                                                                                                                                     Ӛ'��L��U�kݞ�X�& F9i�\ߟl����^�qh��>a�l7���b�␦�C
+�GM�Oq���f<��IkQ��Wkj�(�240P�$L1��,�ǔ2�y�B9A1���X1��,:>D�F�N.����f7��w:l����                                                                        ��ż��N?3#_���␦�GDb�-n^>$|�T�S,z����j�$19����iY�w�֒PV����(�b�̭L�Z�5�؝OOe�ݚ���E���뛽VOiFy`�����}.����s'�c�f�t��A�:: �1�@�H*k�s���΂��#;Ca٣!�f9��'�w�P3+��;�Bv����s-���M��d4T��]e4�����Y����g ������/aG�TJe��N)�쳶�{#�#�0%␦$x�3§L�6Ȃ?����L��F�K/��b���n+��a1��T�$�Hg\��<        d��bcju���A�h��`�L�y�/����)$��#�'��X��3���f���Y{$�'�w�S9ۓ{�F��HrZg8�    �V�$�   �|��*��Z�Q��
+TN�;�x���>Y=�j�V`����[c$fR�g�'�lfŸ4x-�⢈l '0si   ·�����л6
+                                                        �n������G���D������]R�.b�""B��M��JM��>�pa�v���ZA�,{�,[�����g��}gF��Q��d��␦�>Wd�mR6�y��k]=�S�U9s�p�ʌ=n/N�;��3 ���r>��U���Z��
+�X                                                                            ����yc�_֡w���bQ�1nf�ZCAi�o׽q��v�DfkY�v"���`T��␦z/
+  �(0��7R�f��S^�PG�w�0�n�$�                                                                                                   �3�␦�y ��'�8û]��XA�=}��dzy�n���s�-K%K/�P/5~�)e)UQ�D?6�-�����G|�0;zN5��B      �ێ��#�@�I�!�:�sldwk�����2w��H]����\ʔGl3�qH㌵��6i��L�@���+u␦�c���?��s����j:,����[���>�����ɓ���T��LH�����]�c�&�✱�u���!B�>��Y��Qz���x��;Zm�}��i␦�k���)���}
+                                                                8��4�*�:���q                                                                                                   -W�:
+Z�Ll(O�P�8;��1��0Un6���t7��                                                 Yj��j����d�+�ӑ,^
+                           �k�7G��`�@���E�3��ޅ�BXf���m[8Xq�L����j��A!�fF��                  �   `ZSd��hȍ� �=    -�z��h�z)�?/el�'�Eb7���� H��Ee���^��"���H��W*�7�m1;�G�����i�L��=�""�s�륣�;��Zb�����@[$��%��|n$��l>���3o�/���H�Z[�(�        ['�y�]�           �7?'E!���D�۬�R�܄C^lY^��9��9���c�e���"l        I��oa␦s��EG�}�!(P���$�!�ax����t��:ed���2��j4����A�N
+D�iD�%�"&��n��Ҏ+��rG�.��b���-␦<��,��?P������[DD~Y��1��|r&����-��l��nE"��
+8�����ǩ�1�3��N�␦j��߾T�� m�'_�;OF��2���dQ�A�@%   ��t���ӄ��O�5�Q���=�=�>L�'�d��::�A�V�y��`&m\�
+�Z[�N�ν<<Z�D���!����`�z]�F�OM�3S�׵\�{�t�ѣH�$�k>�!�������ψ����]�9������-����t�u��|��s1��bA�+�U��lz%a�ʝ<>�a[[y�k���:�����"ϕ�x��-�Įiq:��p5ͻ
+                                                                                         ������f�S�G�,,��=J5�|LY��k�-                   �$Q��␦^��?ܽqd�Gi���J��ue�_��g��j�i�%\vz�^P9$�������Ţ���lۊ��s`��I����A��������ĳ#$&�!;�t_�&␦��5�D��S�����n$Z���ؠ�L[��ͅ��P�`_@���ff�(xm��<�M�S�3��X��C� �H&������B>�ʛئq��i͋�h���*'�~kY ?<��%G��R�?l܊�b�X�vz����,3���v�6�1$y��D�{�%]^
+����%�E1�>�e�zX]%=��#��eU�!�p�l��+�E����b���΅p|mKr��x֤ذ%�eu�����'��9!�!�vU5
+NGu��+��6������枍�"�sf�#f$�D6�/)��}_���[Q��9L2�lF�8Ƀx����N���Aʺ�i��*,���F�xsB�lK�'�2�&;�e�l(�#���[�Ӟ��3(PP��=P�
+'���R�ˈI��nBm                                                                                  �!;$���R䂖      ˮB!���q]�ǚ}�Ś=
+VP�0�(Sڛ�X�ֹț���H���|���t3���_�m��z�-��4ܽ5�9�wүI�H\���@��-�b���]E��P�}��"���v�Cp�U��8U�7!M�c�aC1sO)�>��9wE/d�e��ԉ&I��a�9��)6V��b�Sl����N(~���2�␦�G�<<�"J
+��#��Ɵ4�                                                                                 *0i��q�`g?Lv�Y�������4q�v}~"   D`�Q��Ug��s��Z��;k��V���x�tZLk���MRnK��4�����f�-j���N�b[\��
+V��!���eE����;J�?@QS�1O��7�7x�mf>x���kW�~("�&8;�AB'���%8�=�w��l�=Ga�'غz!$�Q��:���TO�Jo�6�!t�
+����}̚+���Mi�&�]\{=�`␦��&R_��zMW�9P��5&�衝����� �ʌ��/��0K��B�O{*K��8����Ãm1�j;��a'\�Z�oE��)@�5>�EL�n6���n[�m�K�U�,�����%�<0�+Ʊ�%ݍW�p��������oQZL ��F�~�:*.���*˘���X�09��W�/4�T|@Pw�����J(g��a�lu�X� )f��P�#�m�e�+���f֪�f�����Oe�U?���AHx�^���kİ␦�gъ�@␦��/9,���+��I���������3�����'���0'�θd6{ӃӢ��?�b(�(�\��Rي[�p�L'"��f���ߑS@T;����+�}�ջ␦�^�U�,�ӛ�tJ]�1yv�J���A�=TK��,J�D��ǆ�T�t��3������N�I�C0                                                                               ♦Z�V▒�⎽��ý�)��Z⎼���ȵS#�7␋�O┌�P�["��▒�ڈ
+G��)�հa�\+'���G@.]�F��ߚ�w8��7F��eز␦]�␌=⎼��°�E├��KW��*��P␦␤*WV�$
+t�S��+�P��������x0ϏK���          �Pz�>$�R@94�<���0ꪇ�ܡ�<]�����/��0��!��@CB� q�M?X�K�S(����h�A�D�~␦̓V���(�4l�hi4/aM�F��I��o��������C!k�h� �=�-�i��R���?K�G����o@�Ha�Hg�3�Kn�Zz*^
+��]1,K�^;��M�?������"┴"����'��*�&?���O/n�0���΀0,F;���̏��H�`qL1kM��m~��>�_��j2ֿH����!�F;k�3��1�
+%�*����6tipaH{�O�=�Н�^<x&;��/�d'�7�-9�p���s}�ˡ�X���z��e�͑'y�
+                                                �<P│M�±'����!��┐�␌R�Ĥ�ǈH�L�␦�⎽�/P���%��M=�≥�L�<�├�1����۝+┘����&␉��"�I:␊�G�Ц�␌␌�'�┤��X����E�Z⎼�9�<�06· ·PT��S␉�␉$�4␤��զ�│�
+bandit9@bandit:~$ ^C                                                                                                                                                     �Դɹ┼�⎼��␤>
+bandit9@bandit:~$ �C�B�*����DL��0�:��)����≥⎺!␊��␍���R���⎻��[�M��\≥C┘G≥��N�;���]9?┼≠ �°  ±�Y��]≤����␉E�␉ɘ�°]┘�;�����⎻-��A@��FG�� 5�\����A���&��£���%�%4[ˆ��Q�7���␌��U��┤6D��ZC�H�K1�
+bandit9@bandit:~$ �D�±%�┤�3�Z�Ш�Ԫ?0��N���م┐⎼�Ԯ��
+bandit9@bandit:~$                               RJQ�%5��┘S�:�:G=�̷A'Q���C�⎼�>0 �┤�$���M��P[G�·D �W��°���␤����Ն�݊I␊����XD���␦$B�Z)�
+bandit9@bandit:~$                                                                                                               �=°B�\;��琿@&ϳȦ����?���≠≠���3�FN␊��2�└
+bandit9@bandit:~$ ┐&␍��=ϪT⎼
+bandit9@bandit:~$          ������L��
+bandit9@bandit:~$                   �┼�␤�
+bandit9@bandit:~$
+bandit9@bandit:~$
+bandit9@bandit:~$
+bandit9@bandit:~$
+bandit9@bandit:~$
+bandit9@bandit:~$
+bandit9@bandit:~$ whoami
+bandit9
+bandit9@bandit:~$ sore data.txt | grep =
+Command 'sore' not found, did you mean:
+  command 'sure' from deb python3-sure (2.0.0-3)
+  command 'sort' from deb coreutils (9.4-3ubuntu6.2)
+  command 'sor' from deb pccts (1.33MR33-6.3)
+  command 'kore' from deb kore (4.1.0-6)
+  command 'more' from deb util-linux (2.39.3-9ubuntu6.5)
+  command 'sre' from deb node-speech-rule-engine (4.0.7+~0.1.31-2)
+Try: apt install <deb name>
+bandit9@bandit:~$ sort data.txt | grep =
+grep: (standard input): binary file matches
+bandit9@bandit:~$ grep "=" data.txt
+grep: data.txt: binary file matches
+bandit9@bandit:~$ strings data.txt | grep "="
+ ========== the
+I\=Ow
+V?L=
+%3=VZ
+========== password
+={M\
+========== is
+=Dvq
+=n/N
+========== FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+zX]%=
+]\{=
+bandit9@bandit:~$ exit
+
+
+<why?>
+처음 grep 명령어로 = 를 찾아보려했으나 읽을수 없는 문자열이 함께 나와서 알아보지못해 실패 하지만 인터넷서칭을 총해 strings가 사람이 읽을수있는(ascii 문자열)을 출력한다는
+사실을 알게되어 strings와 함께 뽑은 출력물 내에서 grep "="을 사용, 결국 비밀번호를 획득함
+
+<사용한명령어>    {이제부터 전이랑 중복되는 명령어는 최대한 지양해볼 예정입니다}
+strings = 사람이 읽을수있는 (ascii) 문자열만을 찾아 출력
+grep = 주어진 파일속 해당하는 문자열을 찾음
+
+<명령어 사용이유>
+strings = '내'가 읽을수있는 문자열을 찾는것이 문제의 1번째 목표사항이였으므로 사용 
+grep = 그 읽을수있는문자중 = 를 포함한 문자열을 찾는것이 문제의 궁극적 목표였기에 사용
+
+
