@@ -1,15 +1,15 @@
-#리눅스실력을 기르기위하여 bandit 학습#
+**hello! this is my banit write-up!!**
+**this write-up include password for bandit**
 
 
 
-/Spec/
+### My study environment
 
-os = windows11
+--os = windows11
 
-ASUS FA401UM
-ryzen7 260 / rtx5060laptop / LDDR5x 32 GB
+--ASUS FA401UM [my laptop]
+**ryzen7 260 / rtx5060laptop / LPDDR5x 32 GB**
 
-terminal = cmd { but i use wsl2, that is debian based }
+--terminal = cmd { but i use WSL2, that is debian based }
 
 
-수시로 업데이트예정
