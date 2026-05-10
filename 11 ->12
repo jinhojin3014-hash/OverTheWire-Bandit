@@ -1,0 +1,165 @@
+<문제>
+<사용한명령어및 결과>
+root@DESKTOP-MS82E0U:~# ssh bandit10@bandit.labs.overthewire.org -p 2220
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit10@bandit.labs.overthewire.org's password:
+
+root@DESKTOP-MS82E0U:~# ssh bandit11@bandit.labs.overthewire.org -p 2220
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+backend: gibson-0
+bandit11@bandit.labs.overthewire.org's password:
+
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+
+
+Welcome to OverTheWire!
+
+If you find any problems, please report them to the #wargames channel on
+discord or IRC.
+
+--[ Playing the games ]--
+
+  This machine might hold several wargames.
+  If you are playing "somegame", then:
+
+    * USERNAMES are somegame0, somegame1, ...
+    * Most LEVELS are stored in /somegame/.
+    * PASSWORDS for each level are stored in /etc/somegame_pass/.
+
+  Write-access to homedirectories is disabled. It is advised to create a
+  working directory with a hard-to-guess name in /tmp/.  You can use the
+  command "mktemp -d" in order to generate a random and hard to guess
+  directory in /tmp/.  Read-access to both /tmp/ is disabled and to /proc
+  restricted so that users cannot snoop on eachother. Files and directories
+  with easily guessable or short names will be periodically deleted! The /tmp
+  directory is regularly wiped.
+  Please play nice:
+
+    * don't leave orphan processes running
+    * don't leave exploit-files laying around
+    * don't annoy other players
+    * don't post passwords or spoilers
+    * again, DONT POST SPOILERS!
+      This includes writeups of your solution on your blog or website!
+
+--[ Tips ]--
+
+  This machine has a 64bit processor and many security-features enabled
+  by default, although ASLR has been switched off.  The following
+  compiler flags might be interesting:
+
+    -m32                    compile for 32bit
+    -fno-stack-protector    disable ProPolice
+    -Wl,-z,norelro          disable relro
+
+  In addition, the execstack tool can be used to flag the stack as
+  executable on ELF binaries.
+
+  Finally, network-access is limited for most levels by a local
+  firewall.
+
+--[ Tools ]--
+
+ For your convenience we have installed a few useful tools which you can find
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+bandit11@bandit:~$ ls
+data.txt
+bandit11@bandit:~$ cat data.txt
+Gur cnffjbeq vf 7k16JArUVv5LxVuJfsSVdbbtaHGlw9D4
+bandit11@bandit:~$ xxd -t 13 data.txt
+Usage:
+       xxd [options] [infile [outfile]]
+    or
+       xxd -r [-s [-]offset] [-c cols] [-ps] [infile [outfile]]
+Options:
+    -a          toggle autoskip: A single '*' replaces nul-lines. Default off.
+    -b          binary digit dump (incompatible with -ps,-i). Default hex.
+    -C          capitalize variable names in C include file style (-i).
+    -c cols     format <cols> octets per line. Default 16 (-i: 12, -ps: 30).
+    -E          show characters in EBCDIC. Default ASCII.
+    -e          little-endian dump (incompatible with -ps,-i,-r).
+    -g bytes    number of octets per group in normal output. Default 2 (-e: 4).
+    -h          print this summary.
+    -i          output in C include file style.
+    -l len      stop after <len> octets.
+    -n name     set the variable name used in C include output (-i).
+    -o off      add <off> to the displayed file position.
+    -ps         output in postscript plain hexdump style.
+    -r          reverse operation: convert (or patch) hexdump into binary.
+    -r -s off   revert with <off> added to file positions found in hexdump.
+    -d          show offset in decimal instead of hex.
+    -s [+][-]seek  start at <seek> bytes abs. (or +: rel.) infile offset.
+    -u          use upper case hex letters.
+    -R when     colorize the output; <when> can be 'always', 'auto' or 'never'. Default: 'auto'.
+    -v          show version: "xxd 2023-10-25 by Juergen Weigert et al.".
+bandit11@bandit:~$ cat data.txtx | tr 'a-z' 'A-Z'
+cat: data.txtx: No such file or directory
+bandit11@bandit:~$ cat data.txt | tr 'a-z' 'A-Z'
+GUR CNFFJBEQ VF 7K16JARUVV5LXVUJFSSVDBBTAHGLW9D4
+bandit11@bandit:~$ base64 -d data.txt
+␦�base64: invalid input
+bandit11@bandit:~$ echo "GUR CNFFJBEQ VF 7K16JARUVV5LXVUJFSSVDBBTAHGLW9D4" | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'
+THE PASSWORD IS 7X16WNEHII5YKIHWSFFIQOOGNUTYJ9Q4
+
+
+
+<WHY?>
+처음에는 사실 ROT13이 무엇인지 잘알지못하여서 우선검색을시도, ROT13이 글자(알파벳)을 13글자 뒤로 밀어서 나타낸다는 사실을 알게됨. 또한 
+LINUX에서는 이러한 ROT13을 풀기위해서는 tr명령어를 사용해야하는데 그 tr명령어에 무엇을추가해야 ROT13을 디코딩할수있는지 서칭, 그리하여 '[A-Za-z]' '[N-ZA-Mn-za-m]'이 옵션을 붙여서 디코딩하였음
+아 그리고 저기 앞에 echo는 무슨 문자열을 ROT13으로 디코딩할것인가? 를 지정해준것입니다.
+
+<사용한 명령어>
+echo = 뒤에붙여진 문자열 프린트 **ex) echo 'hello' 는 hello가 출력물로뜸** 
+tr = 주어진문자열을 변환해주는것 (옵션에따라서)
+
+(명령어 사용이유)
+echo = tr로 변환할 문자열을 지정해주는데 사용함
+tr = ROT13 을 디코딩하기위해 사용함
+
