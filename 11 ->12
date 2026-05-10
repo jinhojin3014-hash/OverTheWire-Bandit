@@ -1,4 +1,6 @@
 <문제>
+The password for the next level is stored in the file data.txt,
+where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
 <사용한명령어및 결과>
 root@DESKTOP-MS82E0U:~# ssh bandit10@bandit.labs.overthewire.org -p 2220
                          _                     _ _ _
