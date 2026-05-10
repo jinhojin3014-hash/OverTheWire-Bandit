@@ -1,4 +1,4 @@
-**hello! this is my banit write-up!!**
+**hello! this is my bandit write-up!!**
 **this write-up include password for bandit**
 
 
